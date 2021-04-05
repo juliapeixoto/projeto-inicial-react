@@ -7,6 +7,20 @@ class FormularioCadastro extends Component{
         this.titulo = "";
         this.texto = "";
         this.categoria = "Sem categoria";
+        this.state = {categorias:[]};
+        this._novasCategorias = this._novasCategorias.bind(this);
+    }
+
+    componentDidMount(){
+        this.props.categorias.inscrever(this._novasCategorias);
+    }
+
+    componentWillUnmount(){
+        this.props.categorias.desinscrever(this._novasCategorias);
+    }
+
+    _novasCategorias(categorias){
+        this.setState({...this.state, categorias});
     }
 
     _handleMudancaCategoria(evento){
@@ -38,8 +52,8 @@ class FormularioCadastro extends Component{
 
                     <option>Sem categoria</option>
 
-                    {this.props.categorias.map(categoria =>{
-                        return <option>{categoria}</option>
+                    {this.state.categorias.map((categoria, index) =>{
+                        return <option key={index}>{categoria}</option>
                     })}
                 </select>
 
